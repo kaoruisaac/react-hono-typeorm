@@ -1,5 +1,5 @@
-import { encrypt } from "server/service/bcrypt";
-import hashIds from "server/service/hashId";
+import { encrypt } from "server/services/bcrypt";
+import hashIds from "server/services/hashId";
 import {
   AfterLoad,
   BaseEntity,
@@ -13,12 +13,7 @@ import {
   UpdateDateColumn,
 } from "typeorm"
 import JsonEmployee from "~/JsonModels/JsonEmployee";
-
-export enum EMPLOYEE_ROLE {
-  ADMIN = 'admin',
-  MANAGER = 'manager',
-  USER = 'user',
-}
+import { EMPLOYEE_ROLE } from "~/shared/roles";
 
 @Entity({ name: 'employees' })
 export class Employee extends BaseEntity {

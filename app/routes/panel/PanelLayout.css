@@ -1,0 +1,119 @@
+.panel-layout {
+  display: flex;
+  height: 100vh;
+  background-color: #f9fafb;
+}
+
+.panel-sidebar {
+  width: 16rem;
+  background-color: white;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border-right: 1px solid #e5e7eb;
+}
+
+.panel-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.panel-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.panel-subtitle {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+.panel-nav {
+  padding: 1rem;
+}
+
+.panel-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.panel-nav-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+  text-decoration: none;
+  color: #374151;
+}
+
+.panel-nav-item:hover {
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+.panel-nav-item.active {
+  background-color: #eff6ff;
+  color: #1d4ed8;
+}
+
+.panel-nav-icon {
+  margin-right: 0.75rem;
+  font-size: 1.125rem;
+}
+
+.panel-nav-text {
+  font-weight: 500;
+}
+
+.panel-user-info {
+  position: sticky;
+  bottom: 0;
+  top: 100%;
+  width: 16rem;
+  padding: 1rem;
+  border-top: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+}
+
+.panel-user-container {
+  display: flex;
+  align-items: center;
+}
+
+.panel-user-avatar {
+  width: 2rem;
+  height: 2rem;
+  background-color: #3b82f6;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.panel-user-avatar-text {
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.panel-user-details {
+  margin-left: 0.75rem;
+}
+
+.panel-user-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+}
+
+.panel-user-role {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.panel-main {
+  flex: 1;
+  overflow: auto;
+}

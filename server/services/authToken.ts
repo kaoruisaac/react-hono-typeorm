@@ -1,7 +1,7 @@
 import { sign, verify } from "hono/jwt";
 import { deleteCookie, getCookie, setCookie } from "hono/cookie";
 import type { Context } from "hono";
-import type { Employee } from "server/db/model/Employee";
+import type { Employee } from "server/db/models/Employee";
 import JsonEmployee from "~/JsonModels/JsonEmployee";
 
 const {
@@ -16,7 +16,7 @@ export const wrapEmployeeTokenInfoCookie = async (c: Context, employee: Employee
   });
 }
 
-export const clearEmployeeCookie = (c: Context) => {
+export const removeEmployeeTokenInfoCookie = (c: Context) => {
   deleteCookie(c, "employee-token");
 }
 

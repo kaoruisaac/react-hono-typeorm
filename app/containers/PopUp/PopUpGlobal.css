@@ -1,0 +1,56 @@
+.PopUpMain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  transition: .5s;
+  pointer-events: none;
+}
+
+.PopUpMain .PopUpFrame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: overlay;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.PopUpMain .PopUpFrame.active {
+  pointer-events: all;
+}
+
+.PopUpMain .PopUpFrame .bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  transition: .3s;
+  pointer-events: none;
+}
+
+.PopUpMain .PopUpFrame.active .bg {
+  pointer-events: all;
+  backdrop-filter: blur(.3rem);
+}
+
+.PopUpMain .PopUpFrame .popupContent {
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity .3s;
+  overflow: overlay;
+  max-height: var(--main-height);
+}
+
+.PopUpMain .PopUpFrame.active .popupContent {
+  opacity: 1;
+}

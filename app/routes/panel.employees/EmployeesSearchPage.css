@@ -1,0 +1,41 @@
+/* 員工查詢頁面樣式 */
+.employees-search-page {
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+
+.dark .employees-search-page {
+  background-color: #0f172a;
+}
+
+/* 卡片陰影效果 */
+.search-card {
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.search-card:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* 表格行懸停效果 */
+.table-row-hover:hover {
+  background-color: #f1f5f9;
+}
+
+.dark .table-row-hover:hover {
+  background-color: #1e293b;
+}
+
+/* 載入動畫 */
+.loading-container {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+}

@@ -1,0 +1,87 @@
+.PanelHomePage .landing-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.PanelHomePage .landing-content {
+  text-align: center;
+  padding: 0 1.5rem;
+}
+
+.PanelHomePage .landing-title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+}
+
+.PanelHomePage .landing-subtitle {
+  font-size: 1.25rem;
+  color: #4b5563;
+  margin-bottom: 2rem;
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.PanelHomePage .button-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.PanelHomePage .primary-button {
+  background-color: #2563eb;
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  transform: scale(1);
+}
+
+.PanelHomePage .primary-button:hover {
+  background-color: #1d4ed8;
+  transform: scale(1.05);
+}
+
+.PanelHomePage .secondary-button {
+  background-color: transparent;
+  color: #374151;
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  border: 2px solid #d1d5db;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.PanelHomePage .secondary-button:hover {
+  border-color: #9ca3af;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .PanelHomePage .landing-title {
+    font-size: 2rem;
+  }
+  
+  .PanelHomePage .landing-subtitle {
+    font-size: 1rem;
+  }
+  
+  .PanelHomePage .button-group {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .PanelHomePage .primary-button,
+  .PanelHomePage .secondary-button {
+    width: 200px;
+  }
+}

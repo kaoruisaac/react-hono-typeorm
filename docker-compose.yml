@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DEFAULT_ADMIN_EMAIL=admin@example.com
+      - DEFAULT_ADMIN_PASSWORD=123123
+      - JWT_SECRET=SECRET
+      - HASH_SALT=SECRET
+
+    volumes:
+      - ./storage:/app/storage
+    restart: unless-stopped
+

@@ -5,12 +5,22 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
+  type LinksFunction,
+  type LoaderFunction,
 } from "react-router";
-
-import type { Route } from "./+types/root";
+import i18next from "i18next";
+import { HeroUIProvider } from "@heroui/react";
+import { I18nextProvider } from "react-i18next";
+import { ServerContextProvider } from "./containers/serverContext";
+import PopUpProvider from "./containers/PopUp/PopUpProvider";
 import "./app.css";
 
-export const links: Route.LinksFunction = () => [
+export const loader: LoaderFunction = ({ context }) => {
+  return context;
+}
+
+export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
     rel: "preconnect",
@@ -29,6 +39,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="version" content={APP_VERSION} />
         <Meta />
         <Links />
       </head>
@@ -42,10 +53,21 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  const context = useLoaderData<any>();
+  return (
+    <I18nextProvider i18n={i18next}>
+      <ServerContextProvider context={context}>
+        <HeroUIProvider>
+          <PopUpProvider>
+            <Outlet />
+          </PopUpProvider>
+        </HeroUIProvider>
+      </ServerContextProvider>
+    </I18nextProvider>
+  );
 }
 
-export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+export const ErrorBoundary = ({ error }: { error: Error }) => {
   let message = "Oops!";
   let details = "An unexpected error occurred.";
   let stack: string | undefined;

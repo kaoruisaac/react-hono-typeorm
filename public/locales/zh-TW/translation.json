@@ -1,0 +1,11 @@
+{
+  "pageNotFound": "頁面未找到",
+  "pageNotFoundDescription": "抱歉，您要尋找的頁面不存在或已被移除。",
+  "backToHome": "返回首頁",
+  "goBack": "返回上一頁",
+  "needHelp": "需要協助？",
+  "contactSupport": "聯絡支援",
+  "home": "首頁",
+  "employees": "員工管理",
+  "logout": "登出"
+}
