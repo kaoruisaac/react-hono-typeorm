@@ -1,0 +1,9 @@
+.NotifyPopUp.success .header {
+  background-color: #45e645;
+}
+.NotifyPopUp.error .header {
+  background-color: #e64545;
+}
+.NotifyPopUp.warning .header {
+  background-color: #e6a545;
+}

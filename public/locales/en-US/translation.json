@@ -1,11 +1,1 @@
-{
-  "pageNotFound": "Page Not Found",
-  "pageNotFoundDescription": "Sorry, the page you are looking for does not exist or has been removed.",
-  "backToHome": "Back to Home",
-  "goBack": "Go Back",
-  "needHelp": "Need help?",
-  "contactSupport": "Contact Support",
-  "home": "Home",
-  "employees": "Employees",
-  "logout": "Logout"
-}
+{"success":"Success","login":"Login","email":"Email","password":"Password","panel-welcome-title":"Welcome to Admin Panel","panel-welcome-subtitle":"Manage your employees and system settings","panel-welcome-button":"Get Started","search-conditions":"Search Conditions","name":"Name","roles":"Roles","is-active":"Is Active","active":"Active","inactive":"Inactive","search-results":"Search Results","isActive":"Is Active","page-not-found":"Page Not Found","page-not-found-description":"The page you are looking for does not exist or has been moved.","back-to-home":"Back to Home","go-back":"Go Back","need-help":"Need help?","contact-support":"Contact Support","panel-title":"Admin Panel","panel-subtitle":"Employee Management System","notify":"Notification","close":"Close","employees-list":"Employees List","actions":"Actions","no-data":"No data available","edit":"Edit","employees":"Employees","home":"Home","logout":"Logout"}

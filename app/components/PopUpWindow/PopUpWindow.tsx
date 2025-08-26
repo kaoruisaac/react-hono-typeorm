@@ -1,8 +1,8 @@
-import { Button } from "@heroui/button";
+import { Button } from '@heroui/button';
 import { Styled } from 'remix-component-css-loader';
-import { RiCloseCircleLine } from "@remixicon/react";
-import { useEffect, useRef } from "react";
-import { forwardPopup } from "~/containers/PopUp/PopUpProvider";
+import { RiCloseCircleLine } from '@remixicon/react';
+import { useEffect, useRef } from 'react';
+import { forwardPopup } from '~/containers/PopUp/PopUpProvider';
 
 const PopUpWindow = forwardPopup(({
   children,

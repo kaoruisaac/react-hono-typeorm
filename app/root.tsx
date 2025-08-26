@@ -3,33 +3,43 @@ import {
   Links,
   Meta,
   Outlet,
+  redirect,
   Scripts,
   ScrollRestoration,
   useLoaderData,
   type LinksFunction,
   type LoaderFunction,
-} from "react-router";
-import i18next from "i18next";
-import { HeroUIProvider } from "@heroui/react";
-import { I18nextProvider } from "react-i18next";
-import { ServerContextProvider } from "./containers/serverContext";
-import PopUpProvider from "./containers/PopUp/PopUpProvider";
-import "./app.css";
+} from 'react-router';
+import i18next from 'i18next';
+import { serverI18nMap } from '~/services/serverI18nMap';
+import { HeroUIProvider } from '@heroui/react';
+import { I18nextProvider } from 'react-i18next';
+import { ServerContextProvider } from './containers/serverContext';
+import PopUpProvider from './containers/PopUp/PopUpProvider';
+import { LANGUAGES } from './constants';
+import './app.css';
 
-export const loader: LoaderFunction = ({ context }) => {
-  return context;
-}
+export const loader: LoaderFunction = ({ context, params, request }) => {
+  const { locale } = params;
+  const { defaultLocale } = context;
+  const language = LANGUAGES[locale];
+  if (!language) {
+    const url = new URL(request.url);
+    throw redirect(`/${defaultLocale}${url.pathname}`);
+  }
+  return { ...context, locale, language };
+};
 
 export const links: LinksFunction = () => [
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
+  { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
   {
-    rel: "preconnect",
-    href: "https://fonts.gstatic.com",
-    crossOrigin: "anonymous",
+    rel: 'preconnect',
+    href: 'https://fonts.gstatic.com',
+    crossOrigin: 'anonymous',
   },
   {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+    rel: 'stylesheet',
+    href: 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap',
   },
 ];
 
@@ -54,29 +64,34 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   const context = useLoaderData<any>();
+  const { language } = context;
+  const isServer = typeof window === 'undefined';
   return (
-    <I18nextProvider i18n={i18next}>
-      <ServerContextProvider context={context}>
-        <HeroUIProvider>
-          <PopUpProvider>
-            <Outlet />
-          </PopUpProvider>
-        </HeroUIProvider>
-      </ServerContextProvider>
-    </I18nextProvider>
+    <>
+      <I18nextProvider i18n={isServer ? serverI18nMap.get(language) : i18next}>
+        <ServerContextProvider context={context}>
+          <HeroUIProvider>
+            <PopUpProvider>
+              <Outlet />
+            </PopUpProvider>
+          </HeroUIProvider>
+        </ServerContextProvider>
+      </I18nextProvider>
+      {isServer && <script>{`window.storedLanguage = '${language}';`}</script>}
+    </>
   );
 }
 
 export const ErrorBoundary = ({ error }: { error: Error }) => {
-  let message = "Oops!";
-  let details = "An unexpected error occurred.";
+  let message = 'Oops!';
+  let details = 'An unexpected error occurred.';
   let stack: string | undefined;
 
   if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? "404" : "Error";
+    message = error.status === 404 ? '404' : 'Error';
     details =
       error.status === 404
-        ? "The requested page could not be found."
+        ? 'The requested page could not be found.'
         : error.statusText || details;
   } else if (import.meta.env.DEV && error && error instanceof Error) {
     details = error.message;
@@ -94,4 +109,4 @@ export const ErrorBoundary = ({ error }: { error: Error }) => {
       )}
     </main>
   );
-}
+};

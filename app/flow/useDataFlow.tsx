@@ -2,7 +2,7 @@ import { ValidationError } from 'yup';
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { Button, type ButtonProps } from '@heroui/react';
 import LoadingMask from '~/components/GridSystem/LoadingMask';
-import NotifyPopUp from '~/components/NotifyPopUp';
+import NotifyPopUp, { NOTIFY_TYPE } from '~/components/NotifyPopUp';
 import usePopUp from '~/containers/PopUp/usePopUp';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -24,12 +24,14 @@ function useDataFlow<F> ({
   onSubmit = () => {},
   onError = () => {},
   allowDirectSubmit = false,
+  useNotify = true,
 }: {
   form?: AnyObject<F>,
   onMount?: () => Promise<F>,
   onSubmit?: (form?: AnyObject<F>, ...args: any[]) => Promise<any> | void,
   onError?: (valid?) => void,
   allowDirectSubmit?: boolean,
+  useNotify?: boolean,
 }) {
   const { t } = useTranslation();
   const { PopUpBox } = usePopUp();
@@ -45,7 +47,7 @@ function useDataFlow<F> ({
         const f = await onMount();
         setForm(f);
         setIsLoading(false);
-      })()
+      })();
     }
   }, [onMount]);
 
@@ -54,6 +56,9 @@ function useDataFlow<F> ({
     try {
       await onSubmit(form, ...args);
       setHasChanged(false);
+      if (useNotify) {
+        PopUpBox(NotifyPopUp, { message: t('success'), type: NOTIFY_TYPE.SUCCESS });
+      }
     } catch (error) {
       if (error instanceof ValidationError) {
         const newValid = {};
@@ -69,7 +74,7 @@ function useDataFlow<F> ({
       } else {
         if (error.errorMessage) {
           console.log({ error });
-          PopUpBox(NotifyPopUp, { message: error.errorMessage })
+          PopUpBox(NotifyPopUp, { message: error.errorMessage });
         } else {
           console.error({ error });
         }
@@ -109,14 +114,14 @@ function useDataFlow<F> ({
   const SubmitButton = useCallback(({ className, disabled, ...props } = {} as ButtonProps) => (
     <Button
       {...props}
-      disabled={(!cRef.current.hasChanged && !cRef.current.allowDirectSubmit) || disabled}
+      isDisabled={(!cRef.current.hasChanged && !cRef.current.allowDirectSubmit) || disabled}
       className={classNames('SubmitButton', className)}
-      onClick={() => cRef.current.submit()}
+      onPress={() => cRef.current.submit()}
       variant="bordered"
     >
       {props?.children || cRef.current.t('Submit')}
     </Button>
-    ), []);
+  ), []);
 
   const PageLoadingMask = useCallback((props) => <LoadingMask isLoading={cRef.current.isLoading} {...props} />, []);
 
@@ -131,7 +136,7 @@ function useDataFlow<F> ({
     hasChanged,
     setHasChanged,
     LoadingMask: PageLoadingMask,
-  }
+  };
 }
 
 export default useDataFlow;

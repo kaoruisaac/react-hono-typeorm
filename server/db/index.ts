@@ -5,7 +5,7 @@ import { EMPLOYEE_ROLE } from '~/shared/roles';
 const {
   DEFAULT_ADMIN_EMAIL = 'admin@example.com',
   DEFAULT_ADMIN_PASSWORD = '123456',
-} = process.env
+} = process.env;
 
 const AppDataSource = new DataSource({
   type: 'sqlite',
@@ -33,6 +33,6 @@ export const initializeDB = async () => {
       }).save();
     }
 
-    console.log("Data Source has been initialized!");
+    console.log('Data Source has been initialized!');
   }
 };

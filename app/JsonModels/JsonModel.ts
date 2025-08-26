@@ -8,11 +8,11 @@ class JsonModel {
   declare load?: typeof JsonModel.load<this>;
   declare update?: typeof JsonModel.update<this>;
   constructor() {
-     this.load = JsonModel.load.bind(this);
+    this.load = JsonModel.load.bind(this);
   }
   static load<T>(obj: NonFunctionProperties<T>): T {
-      Object.assign(this, obj);
-      return this as T;
+    Object.assign(this, obj);
+    return this as T;
   }
   static update<T>(obj: Partial<NonFunctionProperties<T>>): T {
     Object.assign(this, obj);

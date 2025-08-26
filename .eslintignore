@@ -1,0 +1,34 @@
+# 依賴和構建文件
+node_modules/
+dist/
+build/
+.react-router/
+
+# 靜態資源
+public/
+storage/
+
+# 配置和工具文件
+bin/
+*.config.js
+*.config.mjs
+config.mjs
+
+# 其他
+*.min.js
+*.bundle.js
+coverage/
+.nyc_output/
+
+# 日誌文件
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 環境變數文件
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

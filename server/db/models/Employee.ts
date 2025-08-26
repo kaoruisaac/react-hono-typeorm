@@ -1,5 +1,5 @@
-import { encrypt } from "server/services/bcrypt";
-import hashIds from "server/services/hashId";
+import { encrypt } from 'server/services/bcrypt';
+import hashIds from 'server/services/hashId';
 import {
   AfterLoad,
   BaseEntity,
@@ -11,9 +11,9 @@ import {
   Index,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from "typeorm"
-import JsonEmployee from "~/JsonModels/JsonEmployee";
-import { EMPLOYEE_ROLE } from "~/shared/roles";
+} from 'typeorm';
+import JsonEmployee from '~/JsonModels/JsonEmployee';
+import { EMPLOYEE_ROLE } from '~/shared/roles';
 
 @Entity({ name: 'employees' })
 export class Employee extends BaseEntity {
@@ -21,26 +21,29 @@ export class Employee extends BaseEntity {
   // columns
 
   @PrimaryGeneratedColumn()
-  id!: number;
+    id!: number;
 
   @Column({ type: 'text', nullable: false })
-  name!: string;
+    name!: string;
 
   @Index({ unique: true })
   @Column({ type: 'text', unique: true, nullable: false })
-  email!: string;
+    email!: string;
 
   @Column({ type: 'simple-array', nullable: false })
-  roles!: EMPLOYEE_ROLE[];
+    roles!: EMPLOYEE_ROLE[];
 
   @Column({ type: 'text', nullable: false })
-  password!: string;
+    password!: string;
+
+  @Column({ type: 'boolean', default: true })
+    isActive!: boolean;
 
   @CreateDateColumn()
-  createdAt!: Date;
+    createdAt!: Date;
 
   @UpdateDateColumn()
-  updatedAt!: Date;
+    updatedAt!: Date;
 
   // lifecycle
 
@@ -67,6 +70,7 @@ export class Employee extends BaseEntity {
       name: this.name,
       email: this.email,
       roles: this.roles,
+      isActive: this.isActive,
     });
   }
 }

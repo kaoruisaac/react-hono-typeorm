@@ -33,7 +33,7 @@ const genI18n = async (i18nMappingSheets: GoogleSpreadsheetWorksheet[]) => {
   }));
   await Promise.all(
     Object.keys(results).map((lang) => {
-      return new Promise((r) => writeFile(`../../server/public/locales/${lang}/translation.json`, JSON.stringify(results[lang]), () => r(true)));
+      return new Promise((r) => writeFile(`../../public/locales/${lang}/translation.json`, JSON.stringify(results[lang]), () => r(true)));
     }),
   );
   console.log(results);

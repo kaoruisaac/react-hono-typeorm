@@ -1,4 +1,4 @@
-/* eslint-disable no-return-assign */
+ 
 class DraggableTracker {
   constructor(frameEl, layerEl) {
     Object.assign(this, {
@@ -15,14 +15,14 @@ class DraggableTracker {
   track(event, callback) {
     window.addEventListener('mousemove', this.move);
     window.addEventListener('mouseup', this.stop);
-    this.oreginal = this.frameEl.getBoundingClientRect();
+    this.original = this.frameEl.getBoundingClientRect();
     this.layerBounding = this.layerEl.getBoundingClientRect();
     this.callbacks.push({ callback, startPos: [event.x, event.y] });
   }
 
   move(event) {
     const { height: layerHeight, width: layerWidth } = this.layerBounding;
-    const { top, left, height, width } = this.oreginal;
+    const { top, left, height, width } = this.original;
     this.callbacks.forEach(({ callback, startPos }) => {
       const [startX, startY] = startPos;
 

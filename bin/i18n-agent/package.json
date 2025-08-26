@@ -1,0 +1,20 @@
+{
+  "name": "i18n-agent",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "scan": "tsx scan-i18n.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@babel/parser": "^7.28.3",
+    "@babel/traverse": "^7.28.3",
+    "fs-extra": "^11.3.1",
+    "glob": "^11.0.3",
+    "tsx": "^4.20.5",
+    "zod": "^4.1.1"
+  }
+}

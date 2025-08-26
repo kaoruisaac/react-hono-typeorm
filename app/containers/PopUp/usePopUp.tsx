@@ -1,4 +1,4 @@
-import { useContext } from "react";
-import { PopupContext } from "./PopUpProvider";
-
-export default () => useContext(PopupContext);
+import { useContext } from 'react';
+import { PopupContext } from './PopUpProvider';
+const usePopUp = () => useContext(PopupContext);
+export default usePopUp;

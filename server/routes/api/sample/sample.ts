@@ -1,8 +1,8 @@
-import { Hono } from "hono";
+import { Hono } from 'hono';
 
 const sampleRoute = new Hono();
 
-sampleRoute.get("/:id", (c) => {
+sampleRoute.get('/:id', (c) => {
   const { id } = c.req.param();
   const { name } = c.req.query();
   // const body = await c.req.json();

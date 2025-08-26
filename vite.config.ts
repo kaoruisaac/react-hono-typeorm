@@ -1,19 +1,19 @@
-import "dotenv/config";
+import 'dotenv/config';
 
-import { reactRouter } from "@react-router/dev/vite";
-import { defineConfig } from "vite";
-import tailwindcss from "@tailwindcss/vite";
-import tsconfigPaths from "vite-tsconfig-paths";
-import { reactRouterHonoServer } from "react-router-hono-server/dev";
-import { RemixComponentCssLoader } from "remix-component-css-loader";
+import { reactRouter } from '@react-router/dev/vite';
+import { defineConfig } from 'vite';
+import tailwindcss from '@tailwindcss/vite';
+import tsconfigPaths from 'vite-tsconfig-paths';
+import { reactRouterHonoServer } from 'react-router-hono-server/dev';
+import { RemixComponentCssLoader } from 'remix-component-css-loader';
 
 export default defineConfig({
   plugins: [
     RemixComponentCssLoader(),
     tailwindcss(),
     reactRouterHonoServer({
-      runtime: "node",
-      serverEntryPoint: "server/server.ts",
+      runtime: 'node',
+      serverEntryPoint: 'server/server.ts',
     }),
     reactRouter(),
     tsconfigPaths(),

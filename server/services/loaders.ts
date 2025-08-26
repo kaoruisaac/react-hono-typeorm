@@ -1,12 +1,17 @@
-import { type LoaderFunctionArgs } from "react-router";
-import queryString from "query-string";
-import hashIds from "server/services/hashId";
-import { getPageCriteria } from "server/services/utilities";
-import { PAGE_MODE } from "~/constants";
+import { type LoaderFunctionArgs } from 'react-router';
+import queryString from 'query-string';
+import hashIds from 'server/services/hashId';
+import { getPageCriteria } from 'server/services/utilities';
+import { PAGE_MODE } from '~/constants';
+
+type QueryString<T> = {
+  [key in keyof T]: T[key] extends any[] ? string[] : string | undefined;
+};
+
 
 export const searchParamsLoader = async <T, Q = any>(
   req: LoaderFunctionArgs,
-  findAndCountFunc: (query: Q, pagiOptions: { take, skip }) => Promise<any>,
+  findAndCountFunc: (query: QueryString<Q>, pagiOptions: { take, skip }) => Promise<any>,
   options: {
     autoSearch,
   } = { autoSearch: false },
@@ -14,7 +19,7 @@ export const searchParamsLoader = async <T, Q = any>(
   data: any[];
   rows: T[];
   pagination: { page: number, perPage: number, total: number };
-  query: Q;
+  query: QueryString<Q>;
 }>=> {
   const { query } = queryString.parseUrl(req.request.url) as Record<any, any>;
   const { page = options.autoSearch ? 1 : undefined, perPage = 50 } = query;
@@ -27,7 +32,7 @@ export const searchParamsLoader = async <T, Q = any>(
     const pagination = { page: parseInt(page), perPage, total: count };
     return { data, rows, pagination, query };
   }
-  return { data: [], rows: [], pagination: { page: 1, perPage: 1, total: 0 }, query }
+  return { data: [], rows: [], pagination: { page: 1, perPage: 1, total: 0 }, query };
 };
 
 export const detailPageLoader = ({ params }: LoaderFunctionArgs, hashIdKey = 'hashId') => {
@@ -36,5 +41,5 @@ export const detailPageLoader = ({ params }: LoaderFunctionArgs, hashIdKey = 'ha
   return {
     id: isCreate ? undefined : hashIds.decode(hashId),
     mode: isCreate ? PAGE_MODE.MODE_CREATE : PAGE_MODE.MODE_EDIT, 
-  }
-}
+  };
+};

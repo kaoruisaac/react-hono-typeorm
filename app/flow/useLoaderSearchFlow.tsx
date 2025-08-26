@@ -1,9 +1,10 @@
-import { useLoaderData, useNavigate } from "react-router";
-import classNames from "classnames";
-import queryString from "query-string";
-import { type HTMLAttributes, useCallback, useRef } from "react";
-import { useTranslation } from "react-i18next";
+import { useLoaderData, useNavigate } from 'react-router';
+import classNames from 'classnames';
+import queryString from 'query-string';
+import { type HTMLAttributes, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button, Pagination, type ButtonProps } from '@heroui/react';
+import dayjs from 'dayjs';
 
 type DefaultQuery<T> = Partial<T>;
 
@@ -19,7 +20,7 @@ function useLoaderSearchFlow<T = any, Q = DefaultQuery<T>>({
   const navigate = useNavigate();
   const search = useCallback(async (page = 1) => {
     const newQuery = await onSearch();
-    navigate({ search: `?${queryString.stringify({ ...newQuery, page })}` });
+    navigate({ search: `?${queryString.stringify({ ...newQuery, page, timeStamp: dayjs().unix() })}` });
   }, [navigate, onSearch]);
 
   const cRef = useRef({ search, t, navigate });
@@ -46,7 +47,7 @@ function useLoaderSearchFlow<T = any, Q = DefaultQuery<T>>({
     CreateButton,
     SearchQueryBlock,
     SearchResultBlock,
-  })
+  });
 }
 
 export default useLoaderSearchFlow;
