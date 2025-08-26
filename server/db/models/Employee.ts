@@ -56,9 +56,9 @@ export class Employee extends BaseEntity {
 
   @BeforeInsert()
   @BeforeUpdate()
-  private hashPassword() {
+  private async hashPassword() {
     if (this._prevPassword !== this.password) {
-      this.password = encrypt(this.password);
+      this.password = await encrypt(this.password);
     }
   }
 

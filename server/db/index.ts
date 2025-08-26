@@ -5,15 +5,18 @@ import { EMPLOYEE_ROLE } from '~/shared/roles';
 const {
   DEFAULT_ADMIN_EMAIL = 'admin@example.com',
   DEFAULT_ADMIN_PASSWORD = '123456',
+  ENVIRONMENT = 'production',
 } = process.env;
 
 const AppDataSource = new DataSource({
   type: 'sqlite',
   database: './storage/db.sqlite',
+  migrations: ['server/db/migrations/*.ts'],
+  migrationsTableName: 'migrations',
   entities: [
     Employee,
   ],
-  synchronize: true,
+  synchronize: ENVIRONMENT === 'development',
   logging: true,
 });
 
@@ -36,3 +39,5 @@ export const initializeDB = async () => {
     console.log('Data Source has been initialized!');
   }
 };
+
+export default AppDataSource;
