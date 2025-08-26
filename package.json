@@ -8,7 +8,12 @@
     "build": "npm run config && react-router build",
     "start": "node ./build/server/index.js",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix"
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "typeorm": "typeorm-ts-node-esm",
+    "mig:gen": "npm run typeorm migration:generate -- ./server/db/migrations/Auto -d ./server/db/index.ts",
+    "mig:run": "npm run typeorm migration:run -d ./server/db/index",
+    "mig:revert": "npm run typeorm migration:revert -d ./server/db/index",
+    "mig:show": "npm run typeorm migration:show -d ./server/db/index"
   },
   "dependencies": {
     "@heroui/react": "^2.8.2",

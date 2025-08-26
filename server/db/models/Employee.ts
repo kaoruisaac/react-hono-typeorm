@@ -12,8 +12,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import JsonEmployee from '~/JsonModels/JsonEmployee';
-import { EMPLOYEE_ROLE } from '~/shared/roles';
+import JsonEmployee from 'app/JsonModels/JsonEmployee';
+import { EMPLOYEE_ROLE } from 'app/shared/roles';
 
 @Entity({ name: 'employees' })
 export class Employee extends BaseEntity {
