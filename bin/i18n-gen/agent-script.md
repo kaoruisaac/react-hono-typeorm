@@ -27,6 +27,6 @@
             "key": "submit"
         }
     ]
-    - 當我說 "target" → 指的是 "src/components/Button.tsx"
-    - 當我說 "line" → 指的是 42
-    - 當我說 "key" → 指的是 "submit"
+    - When I say "target" → it refers to "src/components/Button.tsx"
+    - When I say "line" → it refers to 42  
+    - When I say "key" → it refers to "submit"

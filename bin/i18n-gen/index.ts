@@ -1,15 +1,18 @@
 /* eslint-disable no-unused-vars */
+import 'dotenv/config';
 import { writeFile } from 'fs';
 import { GoogleSpreadsheet, GoogleSpreadsheetWorksheet } from 'google-spreadsheet';
 import { GoogleAuth } from 'google-auth-library';
 
+const { IAM_FILE_PATH, SHEET_ID } = process.env;
+
 const exec = async () => {
   process.stdout.write(`\nLoading sheets from google... `);
   const auth = new GoogleAuth({
-    keyFile: './<IAM_FILE_NAME>.json',
+    keyFile: IAM_FILE_PATH,
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
   })
-  const doc = new GoogleSpreadsheet('<SHEET_ID>', auth);
+  const doc = new GoogleSpreadsheet(SHEET_ID, auth);
   await doc.loadInfo();
   await genI18n(doc.sheetsByIndex);
   process.stdout.write(`\nDone`);

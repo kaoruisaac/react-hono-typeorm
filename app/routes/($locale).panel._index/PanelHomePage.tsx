@@ -1,7 +1,7 @@
 import { Styled } from 'remix-component-css-loader';
 import './PanelHomePage.css';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@heroui/react';
+import { Button } from '~/components/GridSystem/heroui';
 import { useServerContext } from '~/containers/serverContext';
 
 const PanelHomePage = () => {

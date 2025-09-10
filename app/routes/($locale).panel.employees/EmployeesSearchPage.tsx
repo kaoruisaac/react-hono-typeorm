@@ -1,17 +1,14 @@
 import { useTranslation } from 'react-i18next';
 import { Styled } from 'remix-component-css-loader';
 import { 
-  Card, 
-  CardBody, 
-  CardHeader, 
   Input,
   Select,
   SelectItem,
-} from '@heroui/react';
+} from '~/components/GridSystem/heroui';
 import useLoaderSearchFlow from '~/flow/useLoaderSearchFlow';
 import JsonEmployee from '~/JsonModels/JsonEmployee';
 import useDataFlow from '~/flow/useDataFlow';
-import EmployeesTable from './components/EmployeesTable/EmployeesTable';
+import EmployeesTable from './components/EmployeesTable';
 import { ROLE_OPTIONS } from '~/constants';
 
 export interface SearchParams {
@@ -50,7 +47,6 @@ const EmployeesSearchPage = () => {
   
   const {
     data,
-    SearchButton,
     SearchPageNav,
     CreateButton,
     SearchQueryBlock,
@@ -79,75 +75,49 @@ const EmployeesSearchPage = () => {
 
         {/* 查詢條件區塊 */}
         <SearchQueryBlock>
-          <Card className="shadow-sm search-card">
-            <CardHeader className="pb-3">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                {t('search-conditions')}
-              </h2>
-            </CardHeader>
-            <CardBody>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <Input
-                  label={t('name')}
-                  value={name}
-                  errorMessage={Vname}
-                  onChange={(e) => changeForm({ name: e.target.value })}
-                />
-                <Input
-                  label={t('email')}
-                  value={email}
-                  errorMessage={Vemail}
-                  onChange={(e) => changeForm({ email: e.target.value })}
-                />
-                <Select
-                  label={t('roles')}
-                  errorMessage={Vroles}
-                  selectedKeys={roles ? [roles] : []}
-                  onSelectionChange={(keys) => {
-                    const selectedKey = Array.from(keys)[0] as string;
-                    changeForm({ roles: selectedKey || '' });
-                  }}
-                >
-                  {ROLE_OPTIONS.map((role) => (
-                    <SelectItem key={role.value}>
-                      {role.label}
-                    </SelectItem>
-                  ))}
-                </Select>
-                <Select
-                  label={t('is-active')}
-                  errorMessage={VisActive}
-                  selectedKeys={isActive !== null ? [isActive.toString()] : []}
-                  onChange={(e) => {
-                    changeForm({ isActive: e.target.value ? JSON.parse(e.target.value) : null });
-                  }}
-                >
-                  <SelectItem key="true">{t('active')}</SelectItem>
-                  <SelectItem key="false">{t('inactive')}</SelectItem>
-                </Select>
-              </div>
-              <div className="flex gap-2 mt-4">
-                <SearchButton />
-              </div>
-            </CardBody>
-          </Card>
+          <Input
+            label={t('name')}
+            value={name}
+            error={Vname}
+            onChange={(e) => changeForm({ name: e.target.value })}
+          />
+          <Input
+            label={t('email')}
+            value={email}
+            error={Vemail}
+            onChange={(e) => changeForm({ email: e.target.value })}
+          />
+          <Select
+            label={t('roles')}
+            error={Vroles}
+            selectedKeys={roles ? [roles] : []}
+            onSelectionChange={(keys) => {
+              const selectedKey = Array.from(keys)[0] as string;
+              changeForm({ roles: selectedKey || '' });
+            }}
+          >
+            {ROLE_OPTIONS.map((role) => (
+              <SelectItem key={role.value}>
+                {role.label}
+              </SelectItem>
+            ))}
+          </Select>
+          <Select
+            label={t('is-active')}
+            error={VisActive}
+            selectedKeys={isActive !== null ? [isActive.toString()] : []}
+            onChange={(e) => {
+              changeForm({ isActive: e.target.value ? JSON.parse(e.target.value) : null });
+            }}
+          >
+            <SelectItem key="true">{t('active')}</SelectItem>
+            <SelectItem key="false">{t('inactive')}</SelectItem>
+          </Select>
         </SearchQueryBlock>
-
         {/* 查詢結果清單 */}
         <SearchResultBlock>
-          <Card className="shadow-sm search-card">
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  {t('search-results')}
-                </h2>
-              </div>
-            </CardHeader>
-            <CardBody>
-              <EmployeesTable data={data} />
-              <SearchPageNav />
-            </CardBody>
-          </Card>
+          <EmployeesTable data={data} />
+          <SearchPageNav />
         </SearchResultBlock>
       </div>
     </Styled>

@@ -2,7 +2,7 @@ import PopUpWindow from '~/components/PopUpWindow';
 import { forwardPopup } from '~/containers/PopUp/PopUpProvider';
 import { Styled } from 'remix-component-css-loader';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@heroui/react';
+import { Button } from '~/components/GridSystem/heroui';
 
 export enum NOTIFY_TYPE {
     SUCCESS = 'success',

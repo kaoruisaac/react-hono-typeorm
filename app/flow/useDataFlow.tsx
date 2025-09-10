@@ -1,9 +1,10 @@
 import { ValidationError } from 'yup';
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { Button, type ButtonProps } from '@heroui/react';
+import { Button, type ButtonProps } from '~/components/GridSystem/heroui';
 import LoadingMask from '~/components/GridSystem/LoadingMask';
 import NotifyPopUp, { NOTIFY_TYPE } from '~/components/NotifyPopUp';
 import usePopUp from '~/containers/PopUp/usePopUp';
+import type { ValidErrorType } from '~/shared/types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
@@ -13,8 +14,8 @@ type AnyObject<F extends Record<any, any>> = Partial<F> & {
   [key: symbol]: any;
 };
 
-type AddPrefix<T, P extends string> = {
-  [K in keyof T as `${P}${string & K}`]: string;
+type AddValidPrefix<T> = {
+  [K in keyof T as `V${string & K}`]: ValidErrorType;
 };
 
 
@@ -36,7 +37,7 @@ function useDataFlow<F> ({
   const { t } = useTranslation();
   const { PopUpBox } = usePopUp();
   const [form, setForm] = useState<AnyObject<F>>(initForm);
-  const [valid, setValid] = useState<AnyObject<AddPrefix<F, 'V'>>>({});
+  const [valid, setValid] = useState<AnyObject<AddValidPrefix<F>>>({});
   const [hasChanged, setHasChanged] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -116,7 +117,8 @@ function useDataFlow<F> ({
       isDisabled={(!cRef.current.hasChanged && !cRef.current.allowDirectSubmit) || disabled}
       className={classNames('SubmitButton', className)}
       onPress={() => cRef.current.submit()}
-      variant="bordered"
+      variant="solid"
+      color="primary"
     >
       {props?.children || t('submit')}
     </Button>

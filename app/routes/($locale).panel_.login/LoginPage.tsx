@@ -22,6 +22,7 @@ const LoginPage = () => {
       email: '',
       password: '',
     },
+    useNotify: false,
     onSubmit: async (data) => {
       await http.auth.login(data.email, data.password);
       navigate('/panel');

@@ -1,3 +1,6 @@
 {
-  "LocalePath": "./public/locales"
+  "LocalePath": "./public/locales",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  }
 }

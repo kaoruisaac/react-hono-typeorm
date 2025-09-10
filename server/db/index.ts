@@ -22,8 +22,10 @@ const AppDataSource = new DataSource({
 
 export const initializeDB = async () => {
   if (!AppDataSource.isInitialized) {
+    console.time('initializeDB');
     await AppDataSource.initialize();
-
+    console.timeEnd('initializeDB');
+    
     // Create default admin user
     const employee = await Employee.findOne({ where: { email: DEFAULT_ADMIN_EMAIL } });
 

@@ -7,15 +7,16 @@ const employeesRoute = new Hono();
 
 // create employee
 employeesRoute.post('/', async (c) => {
-  const { name, email, roles, isActive } = await c.req.json();
-  const employee = await Employee.create({ name, email, roles, isActive });
+  const { name, email, roles, isActive, password } = await c.req.json();
+  const employee = await Employee.create({ name, email, roles, isActive, password });
+  await employee.save();
   return c.json(employee.toJSON());
 });
 
 // update employee
 employeesRoute.put('/:hashId', async (c) => {
   const { hashId } = c.req.param();
-  const { name, email, roles, isActive } = await c.req.json();
+  const { name, email, roles, isActive, password } = await c.req.json();
   const [employee] = await Employee.findBy({ id: hashIds.decode(hashId) });
   if (!employee) {
     return c.json({ error: 'Employee not found' }, StatusCodes.NOT_FOUND);
@@ -24,6 +25,7 @@ employeesRoute.put('/:hashId', async (c) => {
   employee.email = email ?? employee.email;
   employee.roles = roles ?? employee.roles;
   employee.isActive = isActive ?? employee.isActive;
+  employee.password = password ?? employee.password;
   await employee.save();
   return c.json(employee.toJSON());
 });

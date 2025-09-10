@@ -3,7 +3,7 @@ import { Outlet, Link, useLocation } from 'react-router';
 import { Styled } from 'remix-component-css-loader';
 import { useServerContext } from '~/containers/serverContext';
 import useLocale from '~/containers/useLocale';
-import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Tooltip } from '@heroui/react';
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Tooltip } from '~/components/GridSystem/heroui';
 import { RiGlobalLine, RiLogoutCircleLine } from '@remixicon/react';
 import './PanelLayout.css';
 
