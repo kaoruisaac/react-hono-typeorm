@@ -109,7 +109,6 @@ function useDataFlow<F> ({
   cRef.current.changeForm = changeForm;
   cRef.current.isLoading = isLoading;
   cRef.current.allowDirectSubmit = allowDirectSubmit;
-  cRef.current.t = t;
 
   const SubmitButton = useCallback(({ className, disabled, ...props } = {} as ButtonProps) => (
     <Button
@@ -119,7 +118,7 @@ function useDataFlow<F> ({
       onPress={() => cRef.current.submit()}
       variant="bordered"
     >
-      {props?.children || cRef.current.t('Submit')}
+      {props?.children || t('submit')}
     </Button>
   ), []);
 

@@ -25,14 +25,13 @@ function useLoaderSearchFlow<T = any, Q = DefaultQuery<T>>({
 
   const cRef = useRef({ search, t, navigate });
   cRef.current.search = search;
-  cRef.current.t = t;
   cRef.current.navigate = navigate;
 
   const SearchPageNav = useCallback(() => <Pagination total={Math.ceil(pagination.total / pagination.perPage)} page={pagination.page} onChange={(page) => cRef.current.search(page)} />, [pagination]);
   const SearchButton = useCallback(({ className, ...props } = {} as ButtonProps) =>
-    <Button {...props} variant="bordered" className={classNames('SearchButton', className)} onClick={() => cRef.current.search()}>{props?.children || cRef.current.t('Search')}</Button>, []);
+    <Button {...props} variant="bordered" className={classNames('SearchButton', className)} onClick={() => cRef.current.search()}>{props?.children || t('search')}</Button>, [t]);
   const CreateButton = useCallback(({ className, ...props } = {} as ButtonProps) =>
-    <Button {...props} variant="flat" className={classNames('CreateButton', className)} onClick={() => cRef.current.navigate('./create')}>{props?.children || cRef.current.t('Create')}</Button>, []);
+    <Button {...props} variant="flat" className={classNames('CreateButton', className)} onClick={() => cRef.current.navigate('./create')}>{props?.children || t('create')}</Button>, [t]);
   const SearchQueryBlock = useCallback(({ className, ...props } = {} as HTMLAttributes<HTMLDivElement>) =>
     <div {...props} className={classNames('SearchQueryBlock', className)} />, []);
   const SearchResultBlock = useCallback(({ className, ...props } = {} as HTMLAttributes<HTMLDivElement>) =>

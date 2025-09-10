@@ -1,6 +1,5 @@
 import { parse } from "@babel/parser";
 import traverse from "@babel/traverse";
-import fs from "fs";
 import fse from "fs-extra";
 import { glob } from "glob";
 import { Hit } from "./types";
@@ -67,50 +66,50 @@ function extractTransJSX(node: any): string | null {
   const hits: Hit[] = [];
 
   for (const file of files) {
-    const code = fs.readFileSync(file, "utf8");
-    const ast = parse(code, {
-      sourceType: "module",
-      plugins: ["typescript", "jsx"],
-    });
-
-    traverse(ast, {
-      enter(p) {
-        const n: any = p.node;
-
-        if (n.type === "CallExpression") {
-          const k1 = extractCallExpr(n);
-          if (k1) hits.push({ key: k1, file, line: n.loc?.start.line ?? 0 });
-          const k2 = extractFormatMessage(n);
-          if (k2) hits.push({ key: k2, file, line: n.loc?.start.line ?? 0 });
+    const code = await fse.readFile(file, "utf8");
+    try {
+      const ast = parse(code, {
+        sourceType: "module",
+        plugins: ["typescript", "jsx"],
+      });
+  
+      traverse(ast, {
+        enter(p) {
+          const n:any = p.node;
+          if (n.type === "CallExpression") {
+            const k1 = extractCallExpr(n);
+            if (k1) hits.push({ key: k1, target: file, line: n.loc?.start.line ?? 0 });
+            const k2 = extractFormatMessage(n);
+            if (k2) hits.push({ key: k2, target: file, line: n.loc?.start.line ?? 0 });
+          }
+  
+          if (n.type === "JSXElement") {
+            const k3 = extractTransJSX(n);
+            if (k3) hits.push({ key: k3, target: file, line: n.openingElement.loc?.start.line ?? 0 });
+          }
         }
-
-        if (n.type === "JSXElement") {
-          const k3 = extractTransJSX(n);
-          if (k3) hits.push({ key: k3, file, line: n.openingElement.loc?.start.line ?? 0 });
-        }
-      }
-    });
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   // get all existed keys from public/locales/*.json
   const locales = await glob("../../public/locales/en-US/*.json");
   const existedKeys = new Set<string>();
   for (const locale of locales) {
-    const data = JSON.parse(fs.readFileSync(locale, "utf8"));
+    const data = JSON.parse(fse.readFileSync(locale, "utf8"));
     for (const key in data) {
       existedKeys.add(key);
     }
   }
 
   // 去重
-  const seen = new Set<string>();
   const unique = hits.filter((h) => !existedKeys.has(h.key));
 
   await fse.ensureDir("i18n");
-  // 輸出 CSV 與 JSON
-  const csv = ["key,file,line"].concat(unique.map(h => `${h.key},${h.file},${h.line}`)).join("\n");
-  fs.writeFileSync("i18n/missing.csv", csv, "utf8");
-  fs.writeFileSync("i18n/hits.json", JSON.stringify(unique, null, 2), "utf8");
+  // 輸出 JSON
+  fse.writeFileSync("i18n/pending-update.json", JSON.stringify(unique, null, 2), "utf8");
 
-  console.log(`✅ Found ${unique.length} usages. See i18n/missing.csv`);
+  console.log(`✅ Found ${unique.length} usages.`);
 })();

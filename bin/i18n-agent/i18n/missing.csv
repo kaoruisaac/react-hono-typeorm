@@ -1,5 +1,0 @@
-key,file,line
-employees,..\..\app\routes\panel.employees\EmployeesSearchPage.tsx,75
-home,..\..\app\routes\panel\PanelLayout.tsx,15
-employees,..\..\app\routes\panel\PanelLayout.tsx,16
-logout,..\..\app\routes\panel\PanelLayout.tsx,56

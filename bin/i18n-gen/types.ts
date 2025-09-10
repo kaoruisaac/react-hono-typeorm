@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const Hit = z.object({
   key: z.string(),
-  file: z.string(),
+  target: z.string(),
   line: z.number(),
   usage: z.string().optional(),
 });
