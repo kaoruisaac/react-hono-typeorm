@@ -1,0 +1,8 @@
+/* 表格行懸停效果 */
+.SearchTable .table-row-hover:hover {
+  background-color: #f1f5f9;
+}
+
+.dark .SearchTable .table-row-hover:hover {
+  background-color: #1e293b;
+}

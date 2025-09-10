@@ -1,0 +1,1 @@
+export type ValidErrorType = string | [key: string, params: Record<any, any>] | undefined;
