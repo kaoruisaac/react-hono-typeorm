@@ -45,6 +45,9 @@ export class Employee extends BaseEntity {
   @UpdateDateColumn()
     updatedAt!: Date;
 
+  @Column({ type: 'datetime', nullable: true })
+    passwordUpdatedAt!: Date;
+
   // lifecycle
 
   private _prevPassword?: string;
@@ -57,8 +60,9 @@ export class Employee extends BaseEntity {
   @BeforeInsert()
   @BeforeUpdate()
   private async hashPassword() {
-    if (this._prevPassword !== this.password) {
+    if (this.password && this._prevPassword !== this.password) {
       this.password = await encrypt(this.password);
+      this.passwordUpdatedAt = new Date();
     }
   }
 

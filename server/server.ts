@@ -27,24 +27,26 @@ declare module 'hono' {
   }
 }
 
-await initializeDB();
 
-export default createHonoServer({
-  // 自訂 Hono middleware（選用
-  configure(app) {
-    app.use('*', authMiddleware);
-    app.route('/', routes);
-    app.onError((err, c) => {
-      const requestError = new RequestError(err as any);
-      return c.json(requestError, requestError.status as any);
-    });
-  },
-  // 傳給 loader/action 的 context
-  getLoadContext(c: Context) {
-    return {
-      employee: c.get('employee'),
-      defaultLocale: 'tw',
-    };
-  },
-  port: Number(PORT),
-});
+export default (async () => {
+  await initializeDB();
+  return await createHonoServer({
+    // 自訂 Hono middleware（選用
+    configure(app) {
+      app.use('*', authMiddleware);
+      app.route('/', routes);
+      app.onError((err, c) => {
+        const requestError = new RequestError(err as any);
+        return c.json(requestError, requestError.status as any);
+      });
+    },
+    // 傳給 loader/action 的 context
+    getLoadContext(c: Context) {
+      return {
+        employee: c.get('employee'),
+        defaultLocale: 'tw',
+      };
+    },
+    port: Number(PORT),
+  });
+})();

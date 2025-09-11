@@ -53,7 +53,7 @@ const EmployeesDetailPage = () => {
   return (
     <Styled className="p-4">
       <LoadingMask>
-        <Button variant="light" onPress={() => navigate('/panel/employees')}>
+        <Button variant="light" onPress={() => navigate(-1)}>
           <RiArrowLeftLine />
           {t('back-to-list')}
         </Button>
