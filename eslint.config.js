@@ -37,10 +37,7 @@ export default tseslint.config(
       // React 相關規則
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
+      'react-refresh/only-export-components': 'off',
       
       // 一般規則
       'no-console': 'warn',

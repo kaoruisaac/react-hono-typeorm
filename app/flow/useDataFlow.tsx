@@ -74,7 +74,6 @@ function useDataFlow<F> ({
         onError(newValid);
       } else {
         if (error.errorMessage) {
-          console.log({ error });
           PopUpBox(NotifyPopUp, { message: error.errorMessage });
         } else {
           console.error({ error });

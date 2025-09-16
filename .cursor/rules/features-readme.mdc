@@ -1,0 +1,10 @@
+---
+description: When adding or modifying code, always write specification documentation. When viewing code, also refer to specification documentation.
+---
+#### When you add or modify code, always write specification documentation
+Specification documentation should be placed under docs/features, corresponding to the code file location
+For example: Code server/middleware/auth.ts should have a specification document at docs/features/server/middleware/auth-README.md
+
+#### When viewing code, also refer to specification documentation
+Specification documentation is located under docs/features, corresponding to the code file location
+For example: When reading code server/middleware/auth.ts, try to read the specification document at docs/features/server/middleware/auth-README.md

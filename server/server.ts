@@ -6,8 +6,8 @@ import 'dotenv/config';
 import './services/i18n';
 import { initializeDB } from './db';
 import routes from './routes';
-import authMiddleware from './middleware/auth';
 import RequestError from '~/shared/RequestError';
+import authMiddleware from './middleware/auth';
 
 const {
   PORT = 3000,
@@ -17,6 +17,7 @@ const {
 declare module 'react-router' {
   interface AppLoadContext {
     employee?: JsonEmployee;
+    forceLogout?: boolean;
     defaultLocale?: string;
   }
 }
@@ -44,6 +45,7 @@ export default (async () => {
     getLoadContext(c: Context) {
       return {
         employee: c.get('employee'),
+        forceLogout: c.get('force-logout'),
         defaultLocale: 'tw',
       };
     },

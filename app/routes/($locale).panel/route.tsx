@@ -1,5 +1,6 @@
 import { type LoaderFunction, redirect } from 'react-router';
 import PanelLayout from './PanelLayout';
+import queryString from 'query-string';
 
 const LANGUAGES = {
   'tw': 'zh-TW',
@@ -8,9 +9,9 @@ const LANGUAGES = {
 
 export const loader: LoaderFunction = async ({ context, params }) => {
   const { locale } = params;
-  const { employee } = context;
+  const { employee, forceLogout } = context;
   if (!employee) {
-    throw redirect('/panel/login');
+    throw redirect(`/panel/login?${queryString.stringify({ expired: forceLogout ? true : undefined })}`);
   }
   const language = LANGUAGES[locale];
   if (!language) {

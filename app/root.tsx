@@ -25,7 +25,7 @@ export const loader: LoaderFunction = ({ context, params, request }) => {
   const language = LANGUAGES[locale];
   if (!language) {
     const url = new URL(request.url);
-    throw redirect(`/${defaultLocale}${url.pathname}`);
+    throw redirect(`/${defaultLocale}${url.pathname}${url.search || ''}`);
   }
   return { ...context, locale, language };
 };

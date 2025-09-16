@@ -1,9 +1,9 @@
 In the workspace folder, you can describe your working environment, preferred terminal, and other related habits.
 
-For example, enviroment.mdc:
+For example, environment.mdc:
 ```
 ---
-alwaysApply: false
+alwaysApply: true
 ---
 #### Development Environment
 My preferred terminal is PowerShell 7 (pwsh), and I prioritize using PowerShell syntax when executing commands.

@@ -9,6 +9,7 @@ import {
   useMemo,
   createRef,
   type ComponentType,
+  type RefObject,
 } from 'react';
 import DraggableTracker from './DraggableTracker';
 
@@ -79,52 +80,25 @@ export class PopUp extends Component<any, any> {
   }
 }
 
-export class Modal<P> extends PopUp {
-  override componentDidMount(): void {}
-  open(props: P) {
-    this.props.setChildrenProps(props);
-    setTimeout(() => this.setState({ active: true }), 10);
-  }
-  override close(...args) {
-    this.setState({ active: false }, () => {
-      this.listener.emit('close', ...args);
-    });
-  }
-  remove() {
-    const { popupId } = this.props;
-    const { active } = this.state;
-    if (active) {
-      this.close();
-      setTimeout(() => {
-        this.controller.remove(popupId);
-      }, 300);
-    } else {
-      this.controller.remove(popupId);
-    }
-  }
-}
-
 type PopUpProps = {
     PopUpBox?: <T>(Component: ComponentType<T>, props?: PopUpTypeExtends<T>) => Promise<PopUp>;
-    Modal?: <T, P>(Component: ComponentType<T>, props?: P) => Promise<Modal<P>>;
+    remove?: (id: string) => void;
 };
 
 export const PopupContext = createContext({} as PopUpProps);
-
+let PopUpController;
 const popMap = new Map();
 const PopUpProvider = ({ children }) => {
   const [, setUpdateCounter] = useState(0);
-  const controllerRef = useRef({} as any);
-  controllerRef.current = useMemo(() => ({
-    remove: (id) => {
-      setTimeout(() => {
-        popMap.delete(id);
-        setUpdateCounter(prev => prev + 1);
-      }, 300);
-    },
-  }), []);
-  return (
-    <PopupContext.Provider value={{
+  const controllerRef: RefObject<PopUpProps> = useRef({} as any);
+  controllerRef.current = useMemo(() => {
+    PopUpController = {
+      remove: (id: string) => {
+        setTimeout(() => {
+          popMap.delete(id);
+          setUpdateCounter(prev => prev + 1);
+        }, 300);
+      },
       PopUpBox: (Component: any, props) => {
         return new Promise((r) => {
           const popupId = uuid();
@@ -144,30 +118,12 @@ const PopUpProvider = ({ children }) => {
           setUpdateCounter(prev => prev + 1);
         });
       },
-      Modal <P>(Component: any, props: P) {
-        return new Promise<Modal<P>>((r) => {
-          const popupId = uuid();
-          let instance;
-          const ModalFrame = () => {
-            const [childrenProps, setChildrenProps] = useState({});
-            return (
-              <Modal key={popupId} {...{ popupId, controllerRef, onInit: (context) => { instance = context; r(instance); }, setChildrenProps }}>
-                <Component
-                  PopUp={{
-                    close: () => instance.close(),
-                    setDraggable: (el) => instance.setDraggable(el),
-                  }}
-                  {...props}
-                  {...childrenProps}
-                />
-              </Modal>
-            );
-          };
-          popMap.set(popupId, <ModalFrame />);
-          setUpdateCounter(prev => prev + 1);
-        });
-      },
-    }}>
+    };
+    return PopUpController;
+  }, []);
+  
+  return (
+    <PopupContext.Provider value={controllerRef.current}>
       {children}
       <div className="PopUpMain">
         {[...popMap.values()]}
@@ -178,5 +134,7 @@ const PopUpProvider = ({ children }) => {
 export function forwardPopup<T>(ComponentWithPopUp: (props: T, popup: PopUp) => React.ReactNode) {
   return (props: T) => ComponentWithPopUp(props, (props as any).PopUp);
 }
-
+export function getPopUpController (): PopUpProps {
+  return PopUpController;
+}
 export default PopUpProvider;

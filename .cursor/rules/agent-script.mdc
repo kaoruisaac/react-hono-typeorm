@@ -1,3 +1,7 @@
+---
+description: I will refer to this file when I need to execute certain predefined scripts
+---
+
 ## Agent Script
 There are several agent-script.md files in this project.
 agent-script.md describes specific tasks that the Agent needs to execute step by step.

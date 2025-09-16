@@ -39,7 +39,6 @@ const genI18n = async (i18nMappingSheets: GoogleSpreadsheetWorksheet[]) => {
       return new Promise((r) => writeFile(`../../public/locales/${lang}/translation.json`, JSON.stringify(results[lang]), () => r(true)));
     }),
   );
-  console.log(results);
 }
 
 
